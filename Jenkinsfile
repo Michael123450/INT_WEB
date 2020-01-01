@@ -21,7 +21,7 @@ pipeline {
                     node('master'){
                         dir('Release') {
                             deleteDir()
-                            checkout([$class: 'GitSCM', branches: [[name: 'Prod']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-cred-id', url: "https://github.com/intclassproject/Release.git"]]])
+                            checkout([$class: 'GitSCM', branches: [[name: 'Prod']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-cred-id', url: "https://github.com/Michael123450/Release.git"]]])
                             path_json_file = sh(script: "pwd", returnStdout: true).trim() + '/' + 'Prod' + '.json'
                             Current_version = Return_Json_From_File("$path_json_file").release.services.intweb.version
                         }
@@ -29,7 +29,7 @@ pipeline {
 
                     dir('INT_WEB') {
                         deleteDir()
-                        checkout([$class: 'GitSCM', branches: [[name: 'Dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-cred-id', url: "https://github.com/intclassproject/INT_WEB.git"]]])
+                        checkout([$class: 'GitSCM', branches: [[name: 'Dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-cred-id', url: "https://github.com/Michael123450/INT_WEB.git"]]])
                         Commit_Id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                         BuildVersion = Current_version + '_' + Commit_Id
                         last_digit_current_version = sh(script: "echo $Current_version | cut -d'.' -f3", returnStdout: true).trim()
@@ -73,8 +73,8 @@ pipeline {
             steps{
                 script{
                     try{
-                        withCredentials([usernamePassword(credentialsId: 'docker-cred-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                            sh "docker login -u=${DOCKER_USERNAME} -p=${DOCKER_PASSWORD}"
+                        withCredentials([usernamePassword(credentialsId: 'docker-cred-id', passwordVariable: 'toy2017**', usernameVariable: 'mkl88')]) {
+                            sh "docker login -u=${mkl88} -p=${toy2017**}"
                             sh "docker tag $module$colons$BuildVersion $dev_rep_docker$colons$module$underscore$BuildVersion"
                             sh "docker push $dev_rep_docker$colons$module$underscore$BuildVersion"
 
