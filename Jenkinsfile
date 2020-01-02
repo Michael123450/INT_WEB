@@ -73,8 +73,8 @@ pipeline {
             steps{
                 script{
                     try{
-                        withCredentials([usernamePassword(credentialsId: 'docker-cred-id', passwordVariable: 'toy2017**', usernameVariable: 'mkl88')]) {
-                            sh "docker login -u=${mkl88} -p=${toy2017**}"
+                        withCredentials([usernamePassword(credentialsId: 'docker-cred-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                            sh "docker login -u=${DOCKER_USERNAME} -p=${DOCKER_PASSWORD}"
                             sh "docker tag $module$colons$BuildVersion $dev_rep_docker$colons$module$underscore$BuildVersion"
                             sh "docker push $dev_rep_docker$colons$module$underscore$BuildVersion"
 
@@ -88,12 +88,12 @@ pipeline {
                 }
             }
         }
-        stage('Triggering E2E-CI job'){
+        //stage('Triggering E2E-CI job'){
 
-            steps{
-                script{
-                    node('master'){
-                        build job: 'E2E-CI', parameters: [ string(name: 'triggered_by', value: module), string(name:'next_version', value: NextVersion), string(name: 'Image_version', value: dev_rep_docker + colons + module + underscore + BuildVersion)]
+            //steps{
+                //script{
+                    //node('master'){
+                        //build job: 'E2E-CI', parameters: [ string(name: 'triggered_by', value: module), string(name:'next_version', value: NextVersion), string(name: 'Image_version', value: dev_rep_docker + colons + module + underscore + BuildVersion)]
 
                     }
 
